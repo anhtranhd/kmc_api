@@ -29,7 +29,6 @@ class ShowroomTransformer extends TransformerAbstract
           "id" => (int)$item->id,
           "name" => $item->name,
           "description" => $item->description,
-          "code" => $item->code,
           "status" => $item->status,
           "createdAt" => (string)$item->created_at,
           "updatedAt" => (string)$item->updated_at,

@@ -21,21 +21,6 @@ use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use Throwable;
 
-/**
- * @OA\Schema(
- *   schema="CategorySchema",
- *   title="Category Model",
- *   description="Category model",
- *   @OA\Property(
- *     property="id", description="ID of the user",
- *     @OA\Schema(type="number", example=1)
- *  ),
- *   @OA\Property(
- *     property="user_name", description="user_name of the user",
- *     @OA\Schema(type="string", example="admin_name")
- *  )
- * )
- */
 class CategoryController extends Controller
 {
     /**
@@ -58,99 +43,6 @@ class CategoryController extends Controller
         $this->artifactService = $artifactService;
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/v1/categories",
-     *     operationId="/api/v1/categories",
-     *     tags={"Categories"},
-     *     @OA\Parameter(
-     *         name="category_id",
-     *         in="query",
-     *         description="The category id parameter in query",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="lang",
-     *         in="query",
-     *         description="The lang parameter in query, if not fill this param lang = vi",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="keyword",
-     *         in="query",
-     *         description="The keyword parameter in query",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="page",
-     *         in="query",
-     *         description="The page parameter in query",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         description="The limit parameter in path",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="ok",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                      @OA\Property(
-     *                         property="success",
-     *                         type="boolean",
-     *                         description="The response error status"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         type="array",
-     *                         description="The response result",
-     *                         @OA\Items
-     *                     ),
-     *                     example={
-     *                         "success": true,
-     *                         "message": "success",
-     *                         "data": {
-     *                                  {
-     *                                      "id": 1,
-     *                                      "parent_id": null,
-     *                                      "name": "Nội thất",
-     *                                      "description": null,
-     *                                      "hierarchy": "Nội thất",
-     *                                      "order": 0,
-     *                                      "status": 1,
-     *                                      "created_by": null,
-     *                                      "updated_by": null,
-     *                                      "created_at": null,
-     *                                      "updated_at": null
-     *                                  }
-     *
-     *                          }
-     *                     }
-     *                 )
-     *             )
-     *         }
-     *     ),
-     *     @OA\Response(
-     *         response="400",
-     *         description="Error: Bad request. When required parameters were not supplied.",
-     *     ),
-     * )
-     */
     public function index(Request $request)
     {
         try {
@@ -211,79 +103,6 @@ class CategoryController extends Controller
     {
         return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $str);
     }
-
-    /**
-     * @OA\Get(
-     *     path="/api/v1/categories/tree",
-     *     operationId="/api/v1/categories/tree",
-     *     tags={"Categories"},
-     *     @OA\Parameter(
-     *         name="lang",
-     *         in="query",
-     *         description="The lang parameter in query, if not fill this param lang = vi",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="categoryId",
-     *         in="query",
-     *         description="The categoryId parameter in query",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="ok",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                      @OA\Property(
-     *                         property="success",
-     *                         type="boolean",
-     *                         description="The response error status"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         type="array",
-     *                         description="The response result",
-     *                         @OA\Items
-     *                     ),
-     *                     example={
-     *                         "success": true,
-     *                         "message": "success",
-     *                         "data": {
-     *                                  {
-     *                                      "id": 1,
-     *                                      "parent_id": null,
-     *                                      "name": "Nội thất",
-     *                                      "description": null,
-     *                                      "hierarchy": "Nội thất",
-     *                                      "order": 0,
-     *                                      "status": 1,
-     *                                      "created_by": null,
-     *                                      "updated_by": null,
-     *                                      "created_at": null,
-     *                                      "updated_at": null
-     *                                  }
-     *
-     *                          }
-     *                     }
-     *                 )
-     *             )
-     *         }
-     *     ),
-     *     @OA\Response(
-     *         response="400",
-     *         description="Error: Bad request. When required parameters were not supplied.",
-     *     ),
-     * )
-     */
     public function getListTree(Request $request)
     {
         try {

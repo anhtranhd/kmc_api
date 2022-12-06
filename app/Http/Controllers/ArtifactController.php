@@ -36,172 +36,7 @@ class ArtifactController extends Controller
         $this->manager = $manager;
     }
 
-    /**
-     * Get artifacts
-     *
-     * @param  Request  $request
-     *
-     * @return JsonResponse
-     */
-    /**
-     * @OA\Get(
-     *     path="/api/v1/artifacts",
-     *     operationId="/api/v1/artifacts",
-     *     tags={"Artifacts"},
-     *     @OA\Parameter(
-     *         name="lang",
-     *         in="query",
-     *         description="The lang parameter in query, if not fill this param lang = vi",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="keyword",
-     *         in="query",
-     *         description="The keyword parameter in query",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="categoryIds[]",
-     *         in="query",
-     *         description="list category id for filter",
-     *         required=false,
-     *         @OA\Schema(
-     *         type="array",
-     *           @OA\Items(
-     *               type="integer"
-     *           ),
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="showroomIds[]",
-     *         in="query",
-     *         description="list showroom id for filter",
-     *         required=false,
-     *         @OA\Schema(
-     *         type="array",
-     *           @OA\Items(
-     *               type="integer"
-     *           ),
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="artifact_id",
-     *         in="query",
-     *         description="The artifact id parameter in query",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="status",
-     *         in="query",
-     *         description="The status parameter in query. Only use for storer, value in (0, 1) ",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="sortParam",
-     *         in="query",
-     *         description="The sortParam parameter in query, value in list 'suggestion' - phù hợp nhất, 'created_at'- mới nhất, 'price' - giá, 'has_ar' - có ar",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="sortOrder",
-     *         in="query",
-     *         description="The sortOrder parameter in query, sortOrder = 'asc' to get list artifact với sortParam theo asc, sortOrder = 'desc' to get artifact với sortParam theo desc",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="page",
-     *         in="query",
-     *         description="The page parameter in query",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         description="The limit parameter in path",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="ok",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                      @OA\Property(
-     *                         property="success",
-     *                         type="boolean",
-     *                         description="The response error status"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         type="array",
-     *                         description="The response data",
-     *                         @OA\Items
-     *                     ),
-     *                     example={
-     *                          "success": false,
-     *                         "message": "success",
-     *                         "data": {
-     *                                  {
-     *                                      "id": 111,
-     *                                      "name": "Ghế sofa victorian",
-     *                                      "sku": "SKU222222",
-     *                                      "attributes": {},
-     *                                      "categoryId": 107,
-     *                                      "categoryName": "Ghế",
-     *                                      "storeName": "Breanna Emmerich Jr.",
-     *                                      "brandName": null,
-     *                                      "description": "<p>Ghế sofa</p>",
-     *                                      "price": "",
-     *                                      "quantity": "",
-     *                                      "origin": "",
-     *                                      "totalComments": 0,
-     *                                      "avgRating": "0.0",
-     *                                      "avgStar": "<span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span>",
-     *                                      "images": {},
-     *                                      "video": null,
-     *                                      "threeDimensional": null,
-     *                                      "countStar": {
-     *                                          "1": 0,
-     *                                          "2": 0,
-     *                                          "3": 0,
-     *                                          "4": 0,
-     *                                          "5": 0
-     *                                      },
-     *                                      "countComment": 0,
-     *                                      "countMedia": 0
-     *                                 }
-     *                          },
-     *                          "pagination": {
-     *                              "currentPage": 1,
-     *                              "totalPages": 2,
-     *                              "limit": 10,
-     *                              "totalResult": 15
-     *                          }
-     *                     }
-     *                 )
-     *             )
-     *         }
-     *     ),
-     *     @OA\Response(
-     *         response="400",
-     *         description="Error: Bad request. When required parameters were not supplied.",
-     *     ),
-     * )
-     */
+
     public function getArtifacts(Request $request)
     {
         try {
@@ -210,15 +45,15 @@ class ArtifactController extends Controller
             $search = $request->all();
             $artifacts = $this->artifactService->getArtifactBuilder();
             $artifacts = self::_searchWithParams($artifacts, $search);
-            
+
             $artifacts = self::applySortParams($request, $artifacts);
-            
+
             $paginationParams = $this->baseService->getPaginationParams($request);
 
             $pagination = $this->baseService->getPaginationData($artifacts, $paginationParams['page'], $paginationParams['limit']);
 
             $artifacts = $artifacts->offset($paginationParams['offset'])->limit($paginationParams['limit'])->get();
-            
+
             $formatartifacts = [];
             foreach($artifacts as $artifact) {
                 $formatartifacts[] = $this->artifactService->transformArtifact($artifact);
@@ -266,7 +101,7 @@ class ArtifactController extends Controller
                 return $query;
             });
         }
-        
+
         if (isset($search['categoryIds']) && !empty($search['categoryIds'])) {
             $categoryIds = $search['categoryIds'];
             $idCategories = [];
@@ -312,97 +147,6 @@ class ArtifactController extends Controller
         }
         return $query;
     }
-    /**
-     * Get artifact detail
-     *
-     * @param  $artifactId
-     *
-     * @return JsonResponse
-     */
-    /**
-     * @OA\Get(
-     *     path="/api/v1/artifacts/detail/{id}",
-     *     operationId="/api/v1/artifacts/detail/{id}",
-     *     tags={"Artifacts"},
-     *     @OA\Parameter(
-     *         name="lang",
-     *         in="query",
-     *         description="The lang parameter in query, if not fill this param lang = vi",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="The artifact id in path",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="ok",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                      @OA\Property(
-     *                         property="success",
-     *                         type="boolean",
-     *                         description="The response error status"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         type="object",
-     *                         description="The response result"
-     *                     ),
-     *                     example={
-     *                          "success": false,
-     *                         "message": "success",
-     *                         "data":{
-     *                                      "id": 111,
-     *                                      "name": "Ghế sofa victorian",
-     *                                      "sku": "SKU222222",
-     *                                      "attributes": {},
-     *                                      "categoryId": 107,
-     *                                      "categoryName": "Ghế",
-     *                                      "storeName": "Breanna Emmerich Jr.",
-     *                                      "brandName": null,
-     *                                      "description": "<p>Ghế sofa</p>",
-     *                                      "price": "",
-     *                                      "quantity": "",
-     *                                      "origin": "",
-     *                                      "totalComments": 0,
-     *                                      "avgRating": "0.0",
-     *                                      "avgStar": "<span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span>",
-     *                                      "images": {},
-     *                                      "video": null,
-     *                                      "threeDimensional": null,
-     *                                      "countStar": {
-     *                                          "1": 0,
-     *                                          "2": 0,
-     *                                          "3": 0,
-     *                                          "4": 0,
-     *                                          "5": 0
-     *                                      },
-     *                                      "countComment": 0,
-     *                                      "countMedia": 0
-     *                                }
-     *                     }
-     *                 )
-     *             )
-     *         }
-     *     ),
-     *     @OA\Response(
-     *         response="400",
-     *         description="Error: Bad request. When required parameters were not supplied.",
-     *     ),
-     * )
-     */
     public function detailArtifact($id, Request $request)
     {
         try {
@@ -422,97 +166,6 @@ class ArtifactController extends Controller
         }
     }
 
-    /**
-     * Get artifact detail by code
-     *
-     * @param  $code
-     *
-     * @return JsonResponse
-     */
-    /**
-     * @OA\Get(
-     *     path="/api/v1/artifacts/detail-by-code",
-     *     operationId="/api/v1/artifacts/detail-by-code",
-     *     tags={"Artifacts"},
-     *     @OA\Parameter(
-     *         name="lang",
-     *         in="query",
-     *         description="The lang parameter in query, if not fill this param lang = vi",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="code",
-     *         in="query",
-     *         description="The artifact code in path",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="ok",
-     *         content={
-     *             @OA\MediaType(
-     *                 mediaType="application/json",
-     *                 @OA\Schema(
-     *                      @OA\Property(
-     *                         property="success",
-     *                         type="boolean",
-     *                         description="The response error status"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="message",
-     *                         type="string",
-     *                         description="The response message"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="data",
-     *                         type="object",
-     *                         description="The response result"
-     *                     ),
-     *                     example={
-     *                          "success": false,
-     *                         "message": "success",
-     *                         "data":{
-     *                                      "id": 111,
-     *                                      "name": "Ghế sofa victorian",
-     *                                      "sku": "SKU222222",
-     *                                      "attributes": {},
-     *                                      "categoryId": 107,
-     *                                      "categoryName": "Ghế",
-     *                                      "storeName": "Breanna Emmerich Jr.",
-     *                                      "brandName": null,
-     *                                      "description": "<p>Ghế sofa</p>",
-     *                                      "price": "",
-     *                                      "quantity": "",
-     *                                      "origin": "",
-     *                                      "totalComments": 0,
-     *                                      "avgRating": "0.0",
-     *                                      "avgStar": "<span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span><span class=\'fas fa-star \'></span>",
-     *                                      "images": {},
-     *                                      "video": null,
-     *                                      "threeDimensional": null,
-     *                                      "countStar": {
-     *                                          "1": 0,
-     *                                          "2": 0,
-     *                                          "3": 0,
-     *                                          "4": 0,
-     *                                          "5": 0
-     *                                      },
-     *                                      "countComment": 0,
-     *                                      "countMedia": 0
-     *                                }
-     *                     }
-     *                 )
-     *             )
-     *         }
-     *     ),
-     *     @OA\Response(
-     *         response="400",
-     *         description="Error: Bad request. When required parameters were not supplied.",
-     *     ),
-     * )
-     */
     public function detailArtifactByCode(Request $request)
     {
         try {

@@ -38,7 +38,7 @@ class ShowroomTransformer extends TransformerAbstract
           'video_url_1'  => $item->video_url_1 ? $storageService->url($item->video_url_1) : "",
           'video_url_2'  => $item->video_url_2 ? $storageService->url($item->video_url_2) : "",
           'logo_url_1' => $item->logo_url_1 ? $storageService->url($item->logo_url_1) : "",
-          'shopee_url' => $item->shopee_url,
+          'ecommerce_url' => $item->ecommerce_url,
           '3d_link' => $item->d_link,
       ]);
   }

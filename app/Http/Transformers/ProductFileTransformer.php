@@ -6,12 +6,7 @@ use App\Models\ArtifactFile;
 
 class ArtifactFileTransformer extends TransformerAbstract
 {
-  /**
-   * Turn this item object into a generic array.
-   *
-   * @param $item
-   * @return array
-   */
+
   public function transform(ArtifactFile $item)
     {
         $data = [

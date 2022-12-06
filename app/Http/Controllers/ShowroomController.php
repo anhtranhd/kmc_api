@@ -165,16 +165,6 @@ class ShowroomController extends Controller
             $pagination = $baseService->getPaginationData($showrooms, $paginationParams['page'], $paginationParams['limit']);
 
             $showrooms = $showrooms->offset($paginationParams['offset'])->limit($paginationParams['limit'])->orderBy('created_at', 'desc')->get();
-            $storageService = new StorageService();
-            foreach ($showrooms as $showroom) {
-                $image = null;
-                if ($showroom->medialImageable && @$showroom->medialImageable->file) {
-                    $image = $storageService->url($showroom->medialImageable->file->path);
-                }
-                $showroom->image = $image;
-                $totalArtifact = $this->artifactService->getTotalArtifactByShowroomId($showroom->id);
-                $showroom->totalArtifact = $totalArtifact;
-            }
 
             $formatShowrooms = new Collection($showrooms, new ShowroomTransformer());
             $formatShowrooms = $this->manager->createData($formatShowrooms)->toArray();
@@ -183,7 +173,20 @@ class ShowroomController extends Controller
         } catch (Throwable $t) {
             Log::info($t->getMessage());
             return $this->_errorResponse($t->getMessage());
-            //return $this->_errorResponse(Lang::get('messages.system error'));
+        }
+    }
+
+    public function getDetail($id)
+    {
+        try {
+            $showrooms = Showroom::where('id', $id)->get();
+            $formatShowrooms = new Collection($showrooms, new ShowroomTransformer());
+            $formatShowrooms = $this->manager->createData($formatShowrooms)->toArray();
+            $formatShowrooms = $formatShowrooms['data'];
+            return $this->_successResponse($formatShowrooms, Lang::get('messages.success'));
+        } catch (Throwable $t) {
+            Log::info($t->getMessage());
+            return $this->_errorResponse($t->getMessage());
         }
     }
 

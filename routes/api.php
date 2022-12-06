@@ -17,6 +17,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function () {
     Route::get('/categories', 'App\Http\Controllers\CategoryController@index');
     Route::get('/categories/tree', 'App\Http\Controllers\CategoryController@getListTree');
     Route::get('/showroom', 'App\Http\Controllers\ShowroomController@index');
+    Route::get('/showroom/{id}', 'App\Http\Controllers\ShowroomController@getDetail');
     Route::get('/banner', 'App\Http\Controllers\BannerController@getBanners');
     Route::get('/artifacts', 'App\Http\Controllers\ArtifactController@getArtifacts');
     Route::get('/artifacts/detail/{id}', 'App\Http\Controllers\ArtifactController@detailArtifact');

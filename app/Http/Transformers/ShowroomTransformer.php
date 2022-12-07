@@ -33,7 +33,7 @@ class ShowroomTransformer extends TransformerAbstract
           "createdAt" => (string)$item->created_at,
           "updatedAt" => (string)$item->updated_at,
           'live_chat_url' => $item->live_chat_url,
-          'poster_url' => $item->poster_url,
+          'poster_url' => $item->poster_url ? $storageService->url($item->poster_url) : "",
           'company_profile_url' => $item->company_profile_url,
           'web_url' => $item->web_url,
           'video_url_1'  => $item->video_url_1 ? $storageService->url($item->video_url_1) : "",

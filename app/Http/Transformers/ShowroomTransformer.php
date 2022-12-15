@@ -25,8 +25,8 @@ class ShowroomTransformer extends TransformerAbstract
             'description_url' =>  $artifact->description,
           ];
       }
-      $video_url_1 = $item->video_type_1 == "type_upload" || !$item->video_type_1 ? ($item->video_url_1 ? $storageService->url($item->video_url_1) : "") : $item->video_link_1;
-      $video_url_2 = $item->video_type_2 == "type_upload" || !$item->video_type_2 ? ($item->video_url_2 ? $storageService->url($item->video_url_2) : "") : $item->video_link_2;
+      $video_url_1 = $item->video_url_1 ? $storageService->url($item->video_url_1) : "";
+      $video_url_2 = $item->video_url_2 ? $storageService->url($item->video_url_2) : "";
       return array_merge($dataItem, [
           "id" => (int)$item->id,
           "name" => $item->name,
@@ -40,8 +40,6 @@ class ShowroomTransformer extends TransformerAbstract
           'web_url' => $item->web_url,
           'video_url_1'  =>$video_url_1,
           'video_url_2'  => $video_url_2,
-          'video_type_1'  => $item->video_type_1,
-          'video_type_2'  => $item->video_type_2,
           'logo_url_1' => $item->logo_url_1 ? $storageService->url($item->logo_url_1) : "",
           'ecommerce_url' => $item->ecommerce_url,
           'd_link' => $item->d_link,
